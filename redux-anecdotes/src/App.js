@@ -1,53 +1,16 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import {createAnecdote, vote4} from './reducers/anecdoteReducer'
+import AnecdoteForm from './components/AnecdoteForm'
+import AnecdoteList from './components/AnecdoteList'
 
-const App = () => {
-  const dispatch = useDispatch() 
-  const anecdotes = useSelector(state => state)
-
-
-  const addAnecdote = (event) => {
-    event.preventDefault()
-    const content = event.target.anecdote.value
-    event.target.anecdote.value = ''
-      dispatch(createAnecdote(content))    
-
-  }
-
-  const vote = (id) => {
-    dispatch(vote4(id))
-  }
-
- let anecdotesByVotes = [...anecdotes];
-      anecdotesByVotes.sort(
-        (a, b) => (a.votes < b.votes ? 1 : b.votes < a.votes ? -1 : 0)
-        //could also use return a.likes.localeCompare(b.likes)I think
-      );
+const App = () => {  
    
   return (
     <div>
       <h2>Anecdotes</h2>
-      {anecdotesByVotes.map(anecdote =>
-        <div key={anecdote.id}>
-          <div>
-            {anecdote.content}
-          </div>
-          <div>
-            has {anecdote.votes}
-            <button onClick={() => vote(anecdote.id)}>vote</button>
-          </div>
-        </div>
-      )}
-      <h2>create new</h2>
-      <form onSubmit={addAnecdote}>
-        <div><input name="anecdote"/></div>
-        <button type="submit">create</button>
-      </form>
+      <AnecdoteList/>
+      <AnecdoteForm/>
     </div>
   )
 }
-
-
 
 export default App
