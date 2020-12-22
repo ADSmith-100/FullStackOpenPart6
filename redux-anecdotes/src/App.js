@@ -19,12 +19,16 @@ const App = () => {
     dispatch(vote4(id))
   }
 
-
+ let anecdotesByVotes = [...anecdotes];
+      anecdotesByVotes.sort(
+        (a, b) => (a.votes < b.votes ? 1 : b.votes < a.votes ? -1 : 0)
+        //could also use return a.likes.localeCompare(b.likes)I think
+      );
    
   return (
     <div>
       <h2>Anecdotes</h2>
-      {anecdotes.map(anecdote =>
+      {anecdotesByVotes.map(anecdote =>
         <div key={anecdote.id}>
           <div>
             {anecdote.content}
