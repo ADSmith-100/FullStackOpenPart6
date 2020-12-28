@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { vote4 } from "../reducers/anecdoteReducer";
+import { notifyVote, notifyRemove } from "../reducers/notificationReducer";
 
 //presentational component - not aware that event handler dispatches action
 const Anecdote = ({ anecdote, handleClick }) => {
@@ -32,7 +33,13 @@ const AnecdoteList = (props) => {
         <Anecdote
           key={anecdote.id}
           anecdote={anecdote}
-          handleClick={() => dispatch(vote4(anecdote.id))}
+          handleClick={() => {
+            dispatch(vote4(anecdote.id));
+            dispatch(notifyVote(anecdote.content));
+            setTimeout(() => {
+              dispatch(notifyRemove());
+            }, 5000);
+          }}
         />
       ))}
     </>
