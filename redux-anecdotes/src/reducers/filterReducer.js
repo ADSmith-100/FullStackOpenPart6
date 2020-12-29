@@ -1,9 +1,8 @@
 const filterReducer = (state = "", action) => {
   switch (action.type) {
     case "FILTER_LIST": {
-      return "WTF";
+      return action.data.searchTerm;
     }
-
     default:
       return state;
   }
@@ -12,9 +11,7 @@ const filterReducer = (state = "", action) => {
 export const filterList = (searchTerm) => {
   return {
     type: "FILTER_LIST",
-    data: {
-      searchTerm: searchTerm,
-    },
+    data: { searchTerm },
   };
 };
 

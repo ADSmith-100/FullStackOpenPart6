@@ -20,6 +20,7 @@ const Anecdote = ({ anecdote, handleClick }) => {
 const AnecdoteList = (props) => {
   const dispatch = useDispatch();
   const anecdotes = useSelector((state) => state.anecdotes);
+  const filter = useSelector((state) => state.filterTerms);
 
   let anecdotesByVotes = [...anecdotes];
   anecdotesByVotes.sort(
@@ -27,9 +28,13 @@ const AnecdoteList = (props) => {
     //could also use return a.likes.localeCompare(b.likes)I think
   );
 
+  let filteredAnecdotesByVotes = anecdotesByVotes.filter((a) =>
+    a.content.toLowerCase().includes(filter.toLowerCase())
+  );
+
   return (
     <>
-      {anecdotesByVotes.map((anecdote) => (
+      {filteredAnecdotesByVotes.map((anecdote) => (
         <Anecdote
           key={anecdote.id}
           anecdote={anecdote}

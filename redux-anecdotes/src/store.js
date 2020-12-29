@@ -7,7 +7,7 @@ import notificationReducer from "./reducers/notificationReducer";
 const reducer = combineReducers({
   anecdotes: anecdoteReducer,
   notification: notificationReducer,
-  filteredList: filterReducer,
+  filterTerms: filterReducer,
 });
 const store = createStore(reducer, composeWithDevTools());
 
