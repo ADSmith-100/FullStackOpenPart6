@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { vote4 } from "../reducers/anecdoteReducer";
 import { setNotification } from "../reducers/notificationReducer";
 
@@ -18,19 +18,19 @@ const Anecdote = ({ anecdote, handleClick }) => {
 
 //container component - contains app logic.  coordinates presentational component anecdotes
 const AnecdoteList = (props) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const anecdotes = useSelector((state) => state.anecdotes);
+  const filter = useSelector((state) => state.filterTerms);
 
-  let anecdotesByVotes = [...props.anecdotes];
+  let anecdotesByVotes = [...anecdotes];
   anecdotesByVotes.sort(
     (a, b) => (a.votes < b.votes ? 1 : b.votes < a.votes ? -1 : 0)
     //could also use return a.likes.localeCompare(b.likes)I think
   );
 
   let filteredAnecdotesByVotes = anecdotesByVotes.filter((a) =>
-    a.content.toLowerCase().includes(props.filter.toLowerCase())
+    a.content.toLowerCase().includes(filter.toLowerCase())
   );
-
-  // console.log(anecdotesByVotes, filteredAnecdotesByVotes);
 
   return (
     <>
@@ -39,10 +39,8 @@ const AnecdoteList = (props) => {
           key={anecdote.id}
           anecdote={anecdote}
           handleClick={() => {
-            props.vote4(anecdote);
-            props.setNotification(`you voted '${anecdote.content}'`, 10);
-            // dispatch(vote4(anecdote));
-            // dispatch(setNotification(`you voted '${anecdote.content}'`, 10));
+            dispatch(vote4(anecdote));
+            dispatch(setNotification(`you voted '${anecdote.content}'`, 10));
             // dispatch(notifyVote(anecdote.content));
             // setTimeout(() => {
             //   dispatch(notifyRemove());
@@ -54,20 +52,4 @@ const AnecdoteList = (props) => {
   );
 };
 
-const mapDispatchToProps = {
-  vote4,
-  setNotification,
-};
-
-const mapStateToProps = (state) => {
-  return {
-    anecdotes: state.anecdotes,
-    filter: state.filterTerms,
-  };
-};
-
-const ConnectedAnecdotes = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AnecdoteList);
-export default ConnectedAnecdotes;
+export default AnecdoteList;
