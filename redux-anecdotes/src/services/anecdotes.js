@@ -15,6 +15,7 @@ const createNew = async (content) => {
 
 const update = async (newObject) => {
   const object = { ...newObject, votes: newObject.votes + 1 };
+  // eslint-disable-next-line no-useless-escape
   const response = await axios.put(`${baseUrl}\/${newObject.id}`, object);
 
   return response.data;
