@@ -1,13 +1,12 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { filterList } from "../reducers/filterReducer";
 //if you import filterList without the { } it will result in action.type being undefined in filterReducer!  Pissed me off
 
-const Filter = () => {
-  const dispatch = useDispatch();
+const Filter = (props) => {
   const handleChange = (event) => {
     const searchTerm = event.target.value;
-    dispatch(filterList(searchTerm));
+    props.filterList(searchTerm);
   };
   const style = {
     marginBottom: 10,
@@ -20,4 +19,12 @@ const Filter = () => {
   );
 };
 
-export default Filter;
+const mapStateToProps = (state) => {};
+
+const mapDispatchToProps = {
+  filterList,
+};
+
+const ConnectedFilter = connect(mapStateToProps, mapDispatchToProps)(Filter);
+
+export default ConnectedFilter;
