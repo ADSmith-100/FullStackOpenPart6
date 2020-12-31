@@ -39,7 +39,7 @@ const AnecdoteList = (props) => {
           key={anecdote.id}
           anecdote={anecdote}
           handleClick={() => {
-            dispatch(vote4(anecdote.id));
+            dispatch(vote4(anecdote));
             dispatch(notifyVote(anecdote.content));
             setTimeout(() => {
               dispatch(notifyRemove());
