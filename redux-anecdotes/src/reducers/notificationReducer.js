@@ -61,9 +61,11 @@ export const setNotification = (content, time) => {
         notification: content,
       },
     });
+    //notification !null?
     await setTimeout(() => {
       dispatch(notifyRemove());
     }, time * 500);
+    //otherwise
   };
 };
 
