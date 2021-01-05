@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-unused-vars */
 // const notifications = ["was created successfully!", "You voted for:", null];
 
 const notificationReducer = (state = "", action) => {
@@ -9,7 +11,6 @@ const notificationReducer = (state = "", action) => {
     //   return notifications[1] + " " + action.data.content;
 
     case "NOTIFY_REMOVE": {
-      clearTimeout(action.data.timer);
       return action.data.notification;
     }
     case "SET_NOTIFY": {
@@ -51,24 +52,23 @@ export const notifyRemove = (content) => {
 //   };
 // };
 
+let timerId;
+
 export const setNotification = (content, time) => {
   return async (dispatch) => {
-    console.log(content, time);
-
-    let timer = await setTimeout(() => {
-      dispatch(notifyRemove());
-    }, time * 500);
-
     dispatch({
       type: "SET_NOTIFY",
       data: {
         notification: content,
-        timer: timer,
       },
     });
-    // clearTimeout(timer);
 
-    // await timer;
+    if (timerId) {
+      clearTimeout(timerId);
+    }
+    timerId = await setTimeout(() => {
+      dispatch(notifyRemove());
+    }, time * 500);
   };
 };
 
