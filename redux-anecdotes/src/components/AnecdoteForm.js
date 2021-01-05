@@ -30,7 +30,7 @@ const mapDispatchToProps = {
   setNotification,
 };
 
-const mapStateToProps = (state) => {};
+const mapStateToProps = (state) => ({});
 
 const ConnectedNewAnecdote = connect(
   mapStateToProps,

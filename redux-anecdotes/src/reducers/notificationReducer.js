@@ -9,6 +9,7 @@ const notificationReducer = (state = "", action) => {
     //   return notifications[1] + " " + action.data.content;
 
     case "NOTIFY_REMOVE": {
+      clearTimeout(action.data.timer);
       return action.data.notification;
     }
     case "SET_NOTIFY": {
@@ -54,18 +55,20 @@ export const setNotification = (content, time) => {
   return async (dispatch) => {
     console.log(content, time);
 
+    let timer = await setTimeout(() => {
+      dispatch(notifyRemove());
+    }, time * 500);
+
     dispatch({
       type: "SET_NOTIFY",
       data: {
-        content,
         notification: content,
+        timer: timer,
       },
     });
-    //notification !null?
-    await setTimeout(() => {
-      dispatch(notifyRemove());
-    }, time * 500);
-    //otherwise
+    // clearTimeout(timer);
+
+    // await timer;
   };
 };
 

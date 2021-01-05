@@ -19,7 +19,7 @@ const Filter = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {};
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {
   filterList,
